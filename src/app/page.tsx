@@ -369,7 +369,13 @@ export default function FamilyWebsite() {
   ];
 
   const memoryWall: MemoryItem[] = [
-    { url: 'fampic/mada.jpg', caption: 'Beach Day 2023' },
+    { url: 'fampic/1.jpg', caption: 'Beach Day 2023' },
+    { url: 'fampic/2.jpg', caption: 'Beach Day 2023' },
+    { url: 'fampic/3.jpg', caption: 'Beach Day 2023' },
+    { url: 'fampic/4.jpg', caption: 'Beach Day 2023' },
+    { url: 'fampic/5.jpg', caption: 'Beach Day 2023' },
+    { url: 'fampic/6.jpg', caption: 'Beach Day 2023' },
+    
     
   ];
 
