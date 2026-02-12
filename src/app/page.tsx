@@ -369,12 +369,12 @@ export default function FamilyWebsite() {
   ];
 
   const memoryWall: MemoryItem[] = [
-    { url: '/Memwall/1.jpg', caption: 'Beach Day 2023' },
-    { url: '/Memwall/2.jpg', caption: 'Beach Day 2023' },
-    { url: '/Memwall/3.jpg', caption: 'Beach Day 2023' },
-    { url: '/Memwall/4.jpg', caption: 'Beach Day 2023' },
-    { url: '/Memwall/5.jpg', caption: 'Beach Day 2023' },
-    { url: '/Memwall/6.jpg', caption: 'Beach Day 2023' },
+    { url: 'Memwall/1.jpg', caption: 'Beach Day 2023' },
+    { url: 'Memwall/2.jpg', caption: 'Beach Day 2023' },
+    { url: 'Memwall/3.jpg', caption: 'Beach Day 2023' },
+    { url: 'Memwall/4.jpg', caption: 'Beach Day 2023' },
+    { url: 'Memwall/5.jpg', caption: 'Beach Day 2023' },
+    { url: 'Memwall/6.jpg', caption: 'Beach Day 2023' },
   ];
 
   useEffect(() => {
