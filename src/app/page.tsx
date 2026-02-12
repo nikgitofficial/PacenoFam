@@ -107,9 +107,26 @@ export default function FamilyWebsite() {
       caption: 'Family is everything',
     },
     {
-      url: 'https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?w=1200&h=600&fit=crop',
-      caption: 'Adventures and laughter',
+      url: 'fampic/memwall2.jpg',
+      caption: 'Family is everything',
     },
+    {
+      url: 'fampic/memwall3.jpg',
+      caption: 'Family is everything',
+    },
+    {
+      url: 'fampic/memwall4.jpg',
+      caption: 'Family is everything',
+    },
+    {
+      url: 'fampic/memwall5.jpg',
+      caption: 'Family is everything',
+    },
+    {
+      url: 'fampic/memwall6.jpg',
+      caption: 'Family is everything',
+    },
+    
   ] as const;
 
   const familyMembers: FamilyMember[] = [
@@ -129,7 +146,11 @@ export default function FamilyWebsite() {
       hobbies: ['Singing', 'Karate', 'Reading', 'Driving'],
       favoriteQuote: 'Rangers never die, they just fade away.',
       funFact: 'Known for having a naturally strong and commanding voice.',
-      gallery: ['fampic/father.jpg'],
+      gallery: [
+        'fampic/father.jpg',
+        'fampic/papa.jpg',
+        
+      ],
     },
     {
       id: 2,
@@ -147,30 +168,36 @@ export default function FamilyWebsite() {
       hobbies: ['Singing', 'Dancing', 'Cooking', 'Baking'],
       favoriteQuote: 'Home is where love resides, memories are created, and laughter never ends.',
       funFact: 'Has a collection of over 50 plants in our home!',
-      gallery: ['fampic/mada.jpg'],
-    },
-    {
-      id: 3,
-      name: 'Wencil',
-      role: 'Daughter',
-      image: 'https://images.unsplash.com/photo-1542396601-dca920ea2807?w=400&h=400&fit=crop',
-      message: 'Our little artist, bringing creativity and joy to every day.',
-      fullName: 'Sofia Grace Palma',
-      age: 8,
-      birthday: 'December 5, 2016',
-      occupation: 'Student & Young Artist',
-      education: "Grade 3, St. Mary's Academy",
-      location: 'Quezon City, Philippines',
-      bio: 'A bundle of creativity and imagination! Sofia loves painting, drawing, and creating art from anything she finds. Her cheerful personality and artistic talent brighten every room she enters.',
-      hobbies: ['Painting', 'Drawing', 'Dancing', 'Playing Piano'],
-      favoriteQuote: 'Every child is an artist!',
-      funFact: 'Won first place in the school art competition!',
       gallery: [
-        'https://images.unsplash.com/photo-1542396601-dca920ea2807?w=600&h=600&fit=crop',
-        'https://images.unsplash.com/photo-1518459031867-a89b944bffe4?w=600&h=600&fit=crop',
-        'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&h=600&fit=crop',
+        'fampic/mada.jpg',
+        'fampic/mama1.jpg',
+        'fampic/mama3.jpg',
+
       ],
     },
+    {
+  id: 3,
+  name: 'Wencil',
+  role: 'Eldest Sister',
+  image: 'fampic/ate.jpg',
+  message: 'Our eldest sister and only girl in the family, a dedicated teacher who inspires others every day.',
+  fullName: 'Wencil P. Ramos',
+  age: 39, 
+  birthday: 'August 25, 1987',
+  occupation: 'Teacher',
+  education: 'College Graduate',
+  location: 'BRGY Bato-Tolida Purok-11 Toril Davao City',
+  bio: 'The eldest and only daughter in the family, she has always been a role model to her siblings. As a teacher, she is passionate about shaping young minds and guiding students toward a brighter future. Her patience, strength, and dedication make her someone the whole family looks up to.',
+  hobbies: ['Singing', 'Reading', 'Traveling'],
+  favoriteQuote: 'Education is the most powerful weapon you can use to change the world.',
+  funFact: 'She has a natural talent for explaining difficult lessons in the simplest way.',
+  gallery: [
+    'fampic/ate.jpg',
+    'fampic/ate2.jpg',
+    'fampic/ate3.jpg',
+  ],
+},
+
     {
       id: 4,
       name: 'Lordjems',
@@ -187,7 +214,11 @@ export default function FamilyWebsite() {
       hobbies: ['Baking', 'Playing Guitar', 'Dancing', 'Video Games', 'Singing'],
       favoriteQuote: 'Paldo!',
       funFact: 'Has a natural talent for creating delicious homemade bread and pastries.',
-      gallery: ['fampic/lord.jpg'],
+      gallery: [
+        'fampic/lord.jpg',
+        'fampic/bayot2.jpg',
+        'fampic/bayot3.jpg',
+      ],
     },
     {
       id: 5,
@@ -205,7 +236,11 @@ export default function FamilyWebsite() {
       hobbies: ['Driving', 'Music', 'Cooking', 'Video Games'],
       favoriteQuote: 'Aray mo, pakak!',
       funFact: 'Has hands-on skills in multiple trades and learns new tasks quickly.',
-      gallery: ['fampic/bebe.jpg'],
+      gallery: [
+        'fampic/bebe.jpg',
+        'fampic/beb2.jpg',
+        'fampic/bebe3.jpg',
+      ],
     },
     {
       id: 6,
@@ -223,26 +258,35 @@ export default function FamilyWebsite() {
       hobbies: ['Coding', 'Music', 'Singing', 'Dancing', 'Hiking'],
       favoriteQuote: 'Stay consistent. Stay hungry.',
       funFact: 'Inherited a naturally great singing voice from his father.',
-      gallery: ['fampic/me.jpg'],
+      gallery: [
+        'fampic/me.jpg',
+        'fampic/me2.jpg',
+        'fampic/me3.jpg',
+      ],
     },
     {
-      id: 7,
-      name: 'Mak2x',
-      role: 'Son',
-      image: 'fampic/m123.jpg',
-      message: 'A tech-driven problem solver who enjoys building meaningful digital experiences.',
-      fullName: 'Nikko M. Paceño',
-      age: 28,
-      birthday: 'December 31, 1997',
-      occupation: 'IT Professional / Web Developer',
-      education: 'College Graduate',
-      location: 'Nasipit, Agusan del Norte',
-      bio: 'A passionate IT professional with a strong interest in technology, development, and continuous learning. He enjoys creating digital solutions, exploring modern tools, and improving his craft every day. Outside of work, he values family, creativity, and personal growth.',
-      hobbies: ['Coding', 'Music', 'Singing', 'Dancing', 'Hiking'],
-      favoriteQuote: 'Stay consistent. Stay hungry.',
-      funFact: 'Inherited a naturally great singing voice from his father.',
-      gallery: ['fampic/m123.jpg'],
-    },
+  id: 7,
+  name: 'Mak2x',
+  role: 'Son',
+  image: 'fampic/mark1.jpg',
+  message: 'A determined seafarer student preparing for a life at sea with discipline and courage.',
+  fullName: 'Mark M. Paceño',
+  age: 26,
+  birthday: 'July 31, 2000',
+  occupation: 'Seafarer Student',
+  education: 'College Student (Marine Transportation / Maritime Studies)',
+  location: 'Nasipit, Agusan del Norte',
+  bio: 'A focused and hardworking maritime student with a dream of sailing across the world. He is training to become a professional seafarer, building strong discipline, resilience, and technical skills for life at sea. His determination and adventurous spirit reflect his commitment to achieving his goals.',
+  hobbies: ['Swimming', 'Fitness Training', 'Music', 'Traveling'],
+  favoriteQuote: 'Smooth seas never made a skilled sailor.',
+  funFact: 'Dreams of traveling to different countries while working at sea.',
+  gallery: [
+    'fampic/mark1.jpg',
+    'fampic/mark2.jpg',
+    'fampic/mark3.jpg',
+  ],
+},
+
     {
       id: 8,
       name: 'Jan2x',
@@ -259,7 +303,13 @@ export default function FamilyWebsite() {
       hobbies: ['Boxing', 'Singing', 'Dancing', 'Hiking'],
       favoriteQuote: 'Justice is the foundation of a strong society.',
       funFact: 'Has a surprisingly melodic singing voice, just like his father.',
-      gallery: ['fampic/jan2x.jpg'],
+      gallery: [
+        'fampic/jan2x.jpg',
+        'fampic/jan2.jpg',
+        'fampic/jan3.jpg',
+        'fampic/jan4.jpg',
+        
+      ],
     },
     {
       id: 9,
@@ -277,7 +327,10 @@ export default function FamilyWebsite() {
       hobbies: ['Basketball', 'Singing', 'Dancing', 'Gym'],
       favoriteQuote: 'Stay active, stay curious.',
       funFact: 'Has a surprisingly melodic singing voice, just like his father.',
-      gallery: ['fampic/clyde.jpg'],
+      gallery: [
+        'fampic/clyde.jpg',
+        'fampic/clyde2.jpg',
+      ],
     },
   ];
 
@@ -355,12 +408,6 @@ export default function FamilyWebsite() {
       image: 'fampic/father.jpg',
     },
     {
-      name: 'Lordjems',
-      relationship: 'Brother',
-      message: 'Nik naakay extra dha pahulma rako ilisan ra ugma.',
-      image: 'fampic/lord.jpg',
-    },
-    {
       name: 'Mother Winona',
       relationship: "Nikko's Mother",
       message: 'paghigugmaay mo mga anak kay panahon sa kalisod way lain magtinabangay kundi magsoon ra!',
@@ -369,12 +416,38 @@ export default function FamilyWebsite() {
   ];
 
   const memoryWall: MemoryItem[] = [
-    { url: 'fampic/1.jpg', caption: 'Beach Day 2023' },
-    { url: 'fampic/2.jpg', caption: 'Beach Day 2023' },
-    { url: 'fampic/3.jpg', caption: 'Beach Day 2023' },
-    { url: 'fampic/4.jpg', caption: 'Beach Day 2023' },
-    { url: 'fampic/5.jpg', caption: 'Beach Day 2023' },
-    { url: 'fampic/6.jpg', caption: 'Beach Day 2023' },
+    { url: 'fampic/1.jpg', caption: '2025 Mama Birthday' },
+    { url: 'fampic/2.jpg', caption: 'Tapok2x Lang' },
+    { url: 'fampic/3.jpg', caption: '2025 Mama Birthday' },
+    { url: 'fampic/4.jpg', caption: 'Bpacs Birthday' },
+    { url: 'fampic/5.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/6.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall2.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall3.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall4.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall5.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall6.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall7.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall8.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall9.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall10.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall11.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall12.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall13.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall14.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall15.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall16.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall7.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall8.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall9.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall20.jpg', caption: 'angkol roldan Birthday' },
+    { url: 'fampic/memwall21.jpg', caption: 'angkol roldan Birthday' },
+   
+
+
+   
+   
+    
     
     
   ];
@@ -667,9 +740,18 @@ export default function FamilyWebsite() {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <p className="text-white text-sm font-medium">Click to learn more →</p>
-                  </div>
+                  {/* Mobile: Always visible "Tap to view" badge */}
+<div className="md:hidden absolute bottom-4 left-4 right-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl px-4 py-3 shadow-lg animate-pulse">
+  <p className="text-white text-sm font-bold text-center flex items-center justify-center gap-2">
+    <span className="text-lg">👆</span>
+    Tap to view profile
+  </p>
+</div>
+
+{/* Desktop: Show on hover */}
+<div className="hidden md:block absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+  <p className="text-white text-sm font-medium">Click to learn more →</p>
+</div>
                 </div>
                 <div className="p-6">
                   <div className="mb-4">
