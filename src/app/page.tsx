@@ -9,8 +9,6 @@ import {
   Phone,
   MapPin,
   Facebook,
-  Instagram,
-  Twitter,
   X,
   Calendar,
   Briefcase,
@@ -26,6 +24,11 @@ import {
   Users,
   Home,
   MessageCircle,
+  Github,
+  Globe,
+  ChevronUp,
+  Search,
+  Zap,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -78,6 +81,13 @@ interface MemoryItem {
   caption: string;
 }
 
+interface UpcomingBirthday {
+  name: string;
+  date: string;
+  daysUntil: number;
+  age: number;
+}
+
 // ──────────────────────────────────────────────
 // Component
 // ──────────────────────────────────────────────
@@ -89,6 +99,9 @@ export default function FamilyWebsite() {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [lightboxImage, setLightboxImage] = useState<{ url: string; caption: string } | null>(null);
   const [counters, setCounters] = useState({
     familyMembers: 0,
     memories: 0,
@@ -126,7 +139,6 @@ export default function FamilyWebsite() {
       url: 'fampic/memwall6.jpg',
       caption: 'Family is everything',
     },
-    
   ] as const;
 
   const familyMembers: FamilyMember[] = [
@@ -146,11 +158,7 @@ export default function FamilyWebsite() {
       hobbies: ['Singing', 'Karate', 'Reading', 'Driving'],
       favoriteQuote: 'Rangers never die, they just fade away.',
       funFact: 'Known for having a naturally strong and commanding voice.',
-      gallery: [
-        'fampic/father.jpg',
-        'fampic/papa.jpg',
-        
-      ],
+      gallery: ['fampic/father.jpg', 'fampic/papa.jpg'],
     },
     {
       id: 2,
@@ -168,36 +176,26 @@ export default function FamilyWebsite() {
       hobbies: ['Singing', 'Dancing', 'Cooking', 'Baking'],
       favoriteQuote: 'Home is where love resides, memories are created, and laughter never ends.',
       funFact: 'Has a collection of over 50 plants in our home!',
-      gallery: [
-        'fampic/mada.jpg',
-        'fampic/mama1.jpg',
-        'fampic/mama3.jpg',
-
-      ],
+      gallery: ['fampic/mada.jpg', 'fampic/mama1.jpg', 'fampic/mama3.jpg'],
     },
     {
-  id: 3,
-  name: 'Wencil',
-  role: 'Eldest Sister',
-  image: 'fampic/ate.jpg',
-  message: 'Our eldest sister and only girl in the family, a dedicated teacher who inspires others every day.',
-  fullName: 'Wencil P. Ramos',
-  age: 39, 
-  birthday: 'August 25, 1987',
-  occupation: 'Teacher',
-  education: 'College Graduate',
-  location: 'BRGY Bato-Tolida Purok-11 Toril Davao City',
-  bio: 'The eldest and only daughter in the family, she has always been a role model to her siblings. As a teacher, she is passionate about shaping young minds and guiding students toward a brighter future. Her patience, strength, and dedication make her someone the whole family looks up to.',
-  hobbies: ['Singing', 'Reading', 'Traveling'],
-  favoriteQuote: 'Education is the most powerful weapon you can use to change the world.',
-  funFact: 'She has a natural talent for explaining difficult lessons in the simplest way.',
-  gallery: [
-    'fampic/ate.jpg',
-    'fampic/ate2.jpg',
-    'fampic/ate3.jpg',
-  ],
-},
-
+      id: 3,
+      name: 'Wencil',
+      role: 'Eldest Sister',
+      image: 'fampic/ate.jpg',
+      message: 'Our eldest sister and only girl in the family, a dedicated teacher who inspires others every day.',
+      fullName: 'Wencil P. Ramos',
+      age: 39,
+      birthday: 'August 25, 1987',
+      occupation: 'Teacher',
+      education: 'College Graduate',
+      location: 'BRGY Bato-Tolida Purok-11 Toril Davao City',
+      bio: 'The eldest and only daughter in the family, she has always been a role model to her siblings. As a teacher, she is passionate about shaping young minds and guiding students toward a brighter future. Her patience, strength, and dedication make her someone the whole family looks up to.',
+      hobbies: ['Singing', 'Reading', 'Traveling'],
+      favoriteQuote: 'Education is the most powerful weapon you can use to change the world.',
+      funFact: 'She has a natural talent for explaining difficult lessons in the simplest way.',
+      gallery: ['fampic/ate.jpg', 'fampic/ate2.jpg', 'fampic/ate3.jpg'],
+    },
     {
       id: 4,
       name: 'Lordjems',
@@ -214,11 +212,7 @@ export default function FamilyWebsite() {
       hobbies: ['Baking', 'Playing Guitar', 'Dancing', 'Video Games', 'Singing'],
       favoriteQuote: 'Paldo!',
       funFact: 'Has a natural talent for creating delicious homemade bread and pastries.',
-      gallery: [
-        'fampic/lord.jpg',
-        'fampic/bayot2.jpg',
-        'fampic/bayot3.jpg',
-      ],
+      gallery: ['fampic/lord.jpg', 'fampic/bayot2.jpg', 'fampic/bayot3.jpg'],
     },
     {
       id: 5,
@@ -236,11 +230,7 @@ export default function FamilyWebsite() {
       hobbies: ['Driving', 'Music', 'Cooking', 'Video Games'],
       favoriteQuote: 'Aray mo, pakak!',
       funFact: 'Has hands-on skills in multiple trades and learns new tasks quickly.',
-      gallery: [
-        'fampic/bebe.jpg',
-        'fampic/beb2.jpg',
-        'fampic/bebe3.jpg',
-      ],
+      gallery: ['fampic/bebe.jpg', 'fampic/beb2.jpg', 'fampic/bebe3.jpg'],
     },
     {
       id: 6,
@@ -258,35 +248,26 @@ export default function FamilyWebsite() {
       hobbies: ['Coding', 'Music', 'Singing', 'Dancing', 'Hiking'],
       favoriteQuote: 'Stay consistent. Stay hungry.',
       funFact: 'Inherited a naturally great singing voice from his father.',
-      gallery: [
-        'fampic/me.jpg',
-        'fampic/me2.jpg',
-        'fampic/me3.jpg',
-      ],
+      gallery: ['fampic/me.jpg', 'fampic/me2.jpg', 'fampic/me3.jpg'],
     },
     {
-  id: 7,
-  name: 'Mak2x',
-  role: 'Son',
-  image: 'fampic/mark1.jpg',
-  message: 'A determined seafarer student preparing for a life at sea with discipline and courage.',
-  fullName: 'Mark M. Paceño',
-  age: 26,
-  birthday: 'July 31, 2000',
-  occupation: 'Seafarer Student',
-  education: 'College Student (Marine Transportation / Maritime Studies)',
-  location: 'Nasipit, Agusan del Norte',
-  bio: 'A focused and hardworking maritime student with a dream of sailing across the world. He is training to become a professional seafarer, building strong discipline, resilience, and technical skills for life at sea. His determination and adventurous spirit reflect his commitment to achieving his goals.',
-  hobbies: ['Swimming', 'Fitness Training', 'Music', 'Traveling'],
-  favoriteQuote: 'Smooth seas never made a skilled sailor.',
-  funFact: 'Dreams of traveling to different countries while working at sea.',
-  gallery: [
-    'fampic/mark1.jpg',
-    'fampic/mark2.jpg',
-    'fampic/mark3.jpg',
-  ],
-},
-
+      id: 7,
+      name: 'Mak2x',
+      role: 'Son',
+      image: 'fampic/mark1.jpg',
+      message: 'A determined seafarer student preparing for a life at sea with discipline and courage.',
+      fullName: 'Mark M. Paceño',
+      age: 26,
+      birthday: 'July 31, 2000',
+      occupation: 'Seafarer Student',
+      education: 'College Student (Marine Transportation / Maritime Studies)',
+      location: 'Nasipit, Agusan del Norte',
+      bio: 'A focused and hardworking maritime student with a dream of sailing across the world. He is training to become a professional seafarer, building strong discipline, resilience, and technical skills for life at sea. His determination and adventurous spirit reflect his commitment to achieving his goals.',
+      hobbies: ['Swimming', 'Fitness Training', 'Music', 'Traveling'],
+      favoriteQuote: 'Smooth seas never made a skilled sailor.',
+      funFact: 'Dreams of traveling to different countries while working at sea.',
+      gallery: ['fampic/mark1.jpg', 'fampic/mark2.jpg', 'fampic/mark3.jpg'],
+    },
     {
       id: 8,
       name: 'Jan2x',
@@ -303,13 +284,7 @@ export default function FamilyWebsite() {
       hobbies: ['Boxing', 'Singing', 'Dancing', 'Hiking'],
       favoriteQuote: 'Justice is the foundation of a strong society.',
       funFact: 'Has a surprisingly melodic singing voice, just like his father.',
-      gallery: [
-        'fampic/jan2x.jpg',
-        'fampic/jan2.jpg',
-        'fampic/jan3.jpg',
-        'fampic/jan4.jpg',
-        
-      ],
+      gallery: ['fampic/jan2x.jpg', 'fampic/jan2.jpg', 'fampic/jan3.jpg', 'fampic/jan4.jpg'],
     },
     {
       id: 9,
@@ -327,70 +302,133 @@ export default function FamilyWebsite() {
       hobbies: ['Basketball', 'Singing', 'Dancing', 'Gym'],
       favoriteQuote: 'Stay active, stay curious.',
       funFact: 'Has a surprisingly melodic singing voice, just like his father.',
-      gallery: [
-        'fampic/clyde.jpg',
-        'fampic/clyde2.jpg',
-      ],
+      gallery: ['fampic/clyde.jpg', 'fampic/clyde2.jpg'],
     },
   ];
 
   const familyTimeline: TimelineItem[] = [
     {
-      year: '2014',
-      event: 'Nikko & Maria Got Married',
-      description: 'Our beautiful journey began',
+      year: '1987',
+      event: 'Wencil Was Born',
+      description: 'The first child and only daughter joined the family',
       icon: Heart,
     },
     {
-      year: '2016',
-      event: 'Sofia Was Born',
-      description: 'Our family grew with joy',
+      year: '1989',
+      event: 'Lordjems Was Born',
+      description: 'The second child brought more joy to the family',
       icon: Cake,
     },
     {
-      year: '2018',
-      event: 'Lucas Joined Us',
-      description: 'Complete happiness achieved',
+      year: '1991',
+      event: 'Dward Was Born',
+      description: 'The family continues to grow',
       icon: Star,
     },
     {
+      year: '1997',
+      event: 'Nikko Was Born',
+      description: "Born on New Year's Eve, a special blessing",
+      icon: Sparkles,
+    },
+    {
+      year: '2000',
+      event: 'Mark Was Born',
+      description: 'A new millennium brought a new son',
+      icon: Users,
+    },
+    {
+      year: '2003',
+      event: 'Jan2x Was Born',
+      description: 'Another blessing to the growing family',
+      icon: Heart,
+    },
+    {
+      year: '2009',
+      event: 'Clyde Was Born',
+      description: 'The youngest completed the family',
+      icon: Cake,
+    },
+    {
+      year: '2015',
+      event: 'Wencil Started Teaching',
+      description: 'The eldest began shaping young minds',
+      icon: GraduationCap,
+    },
+    {
       year: '2020',
-      event: 'Moved to Quezon City',
-      description: 'Found our forever home',
-      icon: Home,
+      event: 'Family Reunion',
+      description: 'A memorable gathering of all family members',
+      icon: Users,
+    },
+    {
+      year: '2023',
+      event: 'Nikko Became IT Professional',
+      description: 'Pursuing dreams in technology',
+      icon: Briefcase,
+    },
+    {
+      year: '2025',
+      event: "Mama's Birthday Celebration",
+      description: 'A special celebration for the heart of the home',
+      icon: Trophy,
     },
     {
       year: '2026',
       event: 'First Family Website',
-      description: 'Sharing our story with the world',
-      icon: Sparkles,
+      description: 'Sharing the story with the world',
+      icon: Globe,
     },
   ];
 
   const achievements: Achievement[] = [
     {
-      title: 'Family of the Year 2023',
-      description: 'Community Award',
+      title: '9 Family Members Strong',
+      description: 'A beautiful family of 9',
+      icon: Users,
+      color: 'from-pink-400 to-rose-500',
+    },
+    {
+      title: 'Wencil - Dedicated Educator',
+      description: 'Shaping young minds with passion',
+      icon: GraduationCap,
+      color: 'from-purple-400 to-pink-500',
+    },
+    {
+      title: 'Nikko - IT Professional',
+      description: 'Building digital solutions',
+      icon: Briefcase,
+      color: 'from-blue-400 to-cyan-500',
+    },
+    {
+      title: 'Multi-Talented Bakers',
+      description: 'Lordjems & Dward excel in baking',
       icon: Trophy,
       color: 'from-yellow-400 to-orange-500',
     },
     {
-      title: "Sofia's Art Excellence",
-      description: 'School Competition Winner',
-      icon: Award,
-      color: 'from-purple-400 to-pink-500',
-    },
-    {
-      title: "Lucas's Soccer MVP",
-      description: 'Youth League Champion',
+      title: 'Future Professionals',
+      description: 'Mark (Seafarer) & Jan (Criminology)',
       icon: Star,
-      color: 'from-blue-400 to-cyan-500',
+      color: 'from-green-400 to-teal-500',
     },
     {
-      title: '10 Years Together',
-      description: 'Marriage Anniversary',
+      title: 'Family Musical Talent',
+      description: 'Inherited singing voices from Papa',
+      icon: Music,
+      color: 'from-indigo-400 to-purple-500',
+    },
+    {
+      title: 'Strong Family Values',
+      description: 'Love, honor, and resilience',
       icon: Heart,
       color: 'from-red-400 to-rose-500',
+    },
+    {
+      title: 'First Family Website 2026',
+      description: 'Sharing our story with the world',
+      icon: Globe,
+      color: 'from-cyan-400 to-blue-500',
     },
   ];
 
@@ -422,39 +460,66 @@ export default function FamilyWebsite() {
     { url: 'fampic/4.jpg', caption: 'Bpacs Birthday' },
     { url: 'fampic/5.jpg', caption: 'angkol roldan Birthday' },
     { url: 'fampic/6.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall2.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall3.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall4.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall5.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall6.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall7.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall8.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall9.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall10.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall11.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall12.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall13.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall14.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall15.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall16.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall7.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall8.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall9.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall20.jpg', caption: 'angkol roldan Birthday' },
-    { url: 'fampic/memwall21.jpg', caption: 'angkol roldan Birthday' },
-   
-
-
-   
-   
-    
-    
-    
+    { url: 'fampic/memwall2.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall3.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall4.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall5.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall6.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall7.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall8.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall9.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall10.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall11.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall12.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall13.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall14.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall15.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall16.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall20.jpg', caption: 'Family Moments' },
+    { url: 'fampic/memwall21.jpg', caption: 'Family Moments' },
   ];
+
+  // Calculate upcoming birthdays
+  const getUpcomingBirthdays = (): UpcomingBirthday[] => {
+    const today = new Date();
+    const birthdays = familyMembers.map((member) => {
+      const [month, day, year] = member.birthday.split(' ');
+      const monthNum = new Date(Date.parse(month + ' 1, 2000')).getMonth();
+      const dayNum = parseInt(day.replace(',', ''));
+
+      const nextBirthday = new Date(today.getFullYear(), monthNum, dayNum);
+      if (nextBirthday < today) {
+        nextBirthday.setFullYear(today.getFullYear() + 1);
+      }
+
+      const daysUntil = Math.ceil((nextBirthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      const nextAge = today.getFullYear() - parseInt(year) + (nextBirthday.getFullYear() > today.getFullYear() ? 1 : 0);
+
+      return {
+        name: member.name,
+        date: member.birthday,
+        daysUntil,
+        age: nextAge,
+      };
+    });
+
+    return birthdays.filter((b) => b.daysUntil <= 60).sort((a, b) => a.daysUntil - b.daysUntil);
+  };
+
+  const upcomingBirthdays = getUpcomingBirthdays();
+
+  // Filter family members by search
+  const filteredMembers = familyMembers.filter(
+    (member) =>
+      member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      member.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      member.role.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+      setShowBackToTop(window.scrollY > 500);
 
       if (window.scrollY > 500 && !hasAnimated) {
         animateCounters();
@@ -530,6 +595,11 @@ export default function FamilyWebsite() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+    setMobileMenuOpen(false);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const openMemberDetail = (member: FamilyMember) => {
@@ -556,6 +626,16 @@ export default function FamilyWebsite() {
     }
   };
 
+  const openLightbox = (image: MemoryItem) => {
+    setLightboxImage(image);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeLightbox = () => {
+    setLightboxImage(null);
+    document.body.style.overflow = 'unset';
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50">
       {/* Navbar */}
@@ -566,7 +646,6 @@ export default function FamilyWebsite() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* Logo */}
             <div className="flex items-center space-x-3">
               <div className="bg-gradient-to-br from-pink-500 to-purple-600 p-2 rounded-xl shadow-lg">
                 <Heart className="w-8 h-8 text-white" fill="white" />
@@ -576,7 +655,6 @@ export default function FamilyWebsite() {
               </span>
             </div>
 
-            {/* Desktop Menu */}
             <div className="hidden md:flex space-x-8">
               {['about-us', 'meet-family', 'timeline', 'memories', 'contacts'].map((section) => (
                 <button
@@ -589,7 +667,6 @@ export default function FamilyWebsite() {
               ))}
             </div>
 
-            {/* Mobile Hamburger */}
             <div className="md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -607,7 +684,6 @@ export default function FamilyWebsite() {
             </div>
           </div>
 
-          {/* Mobile Menu - smooth version */}
           <div
             className={`md:hidden overflow-hidden transition-all duration-400 ease-in-out ${
               mobileMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
@@ -622,10 +698,7 @@ export default function FamilyWebsite() {
                 {['about-us', 'meet-family', 'timeline', 'memories', 'contacts'].map((section) => (
                   <button
                     key={section}
-                    onClick={() => {
-                      scrollToSection(section);
-                      setMobileMenuOpen(false);
-                    }}
+                    onClick={() => scrollToSection(section)}
                     className="text-lg font-medium text-gray-800 hover:text-purple-600 transition-colors duration-200 capitalize text-left py-2 hover:bg-purple-50 rounded-lg"
                   >
                     {section.replace('-', ' ')}
@@ -641,11 +714,12 @@ export default function FamilyWebsite() {
       <section id="about-us" className="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent animate-fade-in">
               Hello, I'm Nikko!
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Welcome to our family's corner of the internet. Here, we share our journey, our love, and the beautiful moments that make our family special. Meet the wonderful people who fill my life with joy every single day.
+              Welcome to our family's corner of the internet. Here, we share our journey, our love, and the beautiful
+              moments that make our family special. Meet the wonderful people who fill my life with joy every single day.
             </p>
           </div>
 
@@ -655,7 +729,9 @@ export default function FamilyWebsite() {
               {carouselImages.map((image, index) => (
                 <div
                   key={index}
-                  className={`absolute inset-0 transition-opacity duration-700 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+                  className={`absolute inset-0 transition-opacity duration-700 ${
+                    index === currentSlide ? 'opacity-100' : 'opacity-0'
+                  }`}
                 >
                   <img src={image.url} alt={image.caption} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
@@ -684,11 +760,41 @@ export default function FamilyWebsite() {
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-white w-8' : 'bg-white/50'}`}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentSlide ? 'bg-white w-8' : 'bg-white/50'
+                  }`}
                 />
               ))}
             </div>
           </div>
+
+          {/* Upcoming Birthdays Widget */}
+          {upcomingBirthdays.length > 0 && (
+            <div className="max-w-5xl mx-auto mb-16">
+              <div className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl p-8 shadow-2xl">
+                <div className="flex items-center gap-3 mb-6">
+                  <Cake className="w-8 h-8 text-white" />
+                  <h3 className="text-2xl md:text-3xl font-bold text-white">Upcoming Birthdays 🎉</h3>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {upcomingBirthdays.slice(0, 4).map((birthday, index) => (
+                    <div key={index} className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="text-white font-bold text-lg">{birthday.name}</p>
+                          <p className="text-white/90 text-sm">{birthday.date}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-white font-bold text-2xl">{birthday.daysUntil}</p>
+                          <p className="text-white/90 text-xs">days</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Fun Stats Counter */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
@@ -722,12 +828,26 @@ export default function FamilyWebsite() {
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
             Meet My Family
           </h2>
-          <p className="text-center text-gray-600 mb-16 text-lg">
+          <p className="text-center text-gray-600 mb-8 text-lg">
             The amazing people who make every day an adventure. Click to learn more about each member!
           </p>
 
+          {/* Search Bar */}
+          <div className="max-w-md mx-auto mb-12">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search family members..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 rounded-2xl border-2 border-gray-200 focus:border-purple-500 focus:outline-none transition-colors"
+              />
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {familyMembers.map((member, index) => (
+            {filteredMembers.map((member, index) => (
               <div
                 key={index}
                 onClick={() => openMemberDetail(member)}
@@ -740,18 +860,17 @@ export default function FamilyWebsite() {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  {/* Mobile: Always visible "Tap to view" badge */}
-<div className="md:hidden absolute bottom-4 left-4 right-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl px-4 py-3 shadow-lg animate-pulse">
-  <p className="text-white text-sm font-bold text-center flex items-center justify-center gap-2">
-    <span className="text-lg">👆</span>
-    Tap to view profile
-  </p>
-</div>
 
-{/* Desktop: Show on hover */}
-<div className="hidden md:block absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-  <p className="text-white text-sm font-medium">Click to learn more →</p>
-</div>
+                  <div className="md:hidden absolute bottom-4 left-4 right-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl px-4 py-3 shadow-lg animate-pulse">
+                    <p className="text-white text-sm font-bold text-center flex items-center justify-center gap-2">
+                      <span className="text-lg">👆</span>
+                      Tap to view profile
+                    </p>
+                  </div>
+
+                  <div className="hidden md:block absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-white text-sm font-medium">Click to learn more →</p>
+                  </div>
                 </div>
                 <div className="p-6">
                   <div className="mb-4">
@@ -763,6 +882,12 @@ export default function FamilyWebsite() {
               </div>
             ))}
           </div>
+
+          {filteredMembers.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">No family members found matching "{searchTerm}"</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -776,16 +901,22 @@ export default function FamilyWebsite() {
 
           <div className="relative">
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-pink-500 to-purple-500 hidden md:block" />
+            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-pink-500 to-purple-500 md:hidden" />
 
             {familyTimeline.map((item, index) => (
-              <div key={index} className={`mb-12 flex items-center w-full ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-                <div className="w-full md:w-5/12" />
-                <div className="relative flex items-center justify-center w-full md:w-2/12">
+              <div
+                key={index}
+                className={`mb-12 flex items-center w-full ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+              >
+                <div className="hidden md:block w-full md:w-5/12" />
+
+                <div className="relative flex items-center justify-center w-auto md:w-2/12 mr-6 md:mr-0">
                   <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg z-10">
                     <item.icon className="w-8 h-8 text-white" />
                   </div>
                 </div>
-                <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+
+                <div className={`flex-1 md:w-5/12 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                   <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                     <div className="text-2xl font-bold text-pink-600 mb-2">{item.year}</div>
                     <h3 className="text-xl font-bold text-gray-800 mb-2">{item.event}</h3>
@@ -837,12 +968,16 @@ export default function FamilyWebsite() {
             {memoryWall.map((memory, index) => (
               <div
                 key={index}
+                onClick={() => openLightbox(memory)}
                 className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer"
               >
                 <img src={memory.url} alt={memory.caption} className="w-full h-64 object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <p className="text-white font-semibold text-center">{memory.caption}</p>
+                  </div>
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <Zap className="w-12 h-12 text-white" />
                   </div>
                 </div>
               </div>
@@ -863,11 +998,15 @@ export default function FamilyWebsite() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className={`transition-opacity duration-500 ${index === activeTestimonial ? 'opacity-100' : 'opacity-0 absolute inset-0'}`}
+                className={`transition-opacity duration-500 ${
+                  index === activeTestimonial ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                }`}
               >
                 <div className="bg-white rounded-3xl p-12 shadow-2xl">
                   <MessageCircle className="w-12 h-12 text-pink-500 mb-6 mx-auto" />
-                  <p className="text-xl text-gray-700 italic text-center mb-8 leading-relaxed">"{testimonial.message}"</p>
+                  <p className="text-xl text-gray-700 italic text-center mb-8 leading-relaxed">
+                    "{testimonial.message}"
+                  </p>
                   <div className="flex items-center justify-center gap-4">
                     <img
                       src={testimonial.image}
@@ -1034,6 +1173,27 @@ export default function FamilyWebsite() {
         </div>
       )}
 
+      {/* Image Lightbox */}
+      {lightboxImage && (
+        <div
+          className="fixed inset-0 z-[150] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={closeLightbox}
+        >
+          <button
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-200 hover:scale-110"
+          >
+            <X className="w-6 h-6 text-gray-800" />
+          </button>
+          <div className="max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
+            <img src={lightboxImage.url} alt={lightboxImage.caption} className="w-full h-auto rounded-2xl shadow-2xl" />
+            {lightboxImage.caption && (
+              <p className="text-white text-center mt-4 text-lg font-medium">{lightboxImage.caption}</p>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Contacts Section */}
       <section id="contacts" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
@@ -1050,7 +1210,7 @@ export default function FamilyWebsite() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-800 mb-1">Email</h3>
-                  <p className="text-gray-600">nikko.family@email.com</p>
+                  <p className="text-gray-600">nickforjobacc@gmail.com</p>
                 </div>
               </div>
 
@@ -1060,7 +1220,7 @@ export default function FamilyWebsite() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-800 mb-1">Phone</h3>
-                  <p className="text-gray-600">+1 (555) 123-4567</p>
+                  <p className="text-gray-600">+63(951419049)</p>
                 </div>
               </div>
 
@@ -1070,7 +1230,7 @@ export default function FamilyWebsite() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-800 mb-1">Location</h3>
-                  <p className="text-gray-600">Quezon City, Philippines</p>
+                  <p className="text-gray-600">Nasipit Agusan del Norte</p>
                 </div>
               </div>
 
@@ -1079,16 +1239,34 @@ export default function FamilyWebsite() {
                   <Heart className="w-6 h-6 text-white" fill="white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-800 mb-1">Follow Us</h3>
+                  <h3 className="font-semibold text-gray-800 mb-1">Connect With Me</h3>
                   <div className="flex space-x-3 mt-2">
-                    <a href="#" className="text-gray-600 hover:text-purple-600 transition-colors">
+                    <a
+                      href="https://github.com/nikgitofficial"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-600 hover:text-purple-600 transition-colors"
+                      aria-label="GitHub"
+                    >
+                      <Github className="w-5 h-5" />
+                    </a>
+                    <a
+                      href="https://www.facebook.com/profile.php?id=61585289775055"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-600 hover:text-purple-600 transition-colors"
+                      aria-label="Facebook"
+                    >
                       <Facebook className="w-5 h-5" />
                     </a>
-                    <a href="#" className="text-gray-600 hover:text-purple-600 transition-colors">
-                      <Instagram className="w-5 h-5" />
-                    </a>
-                    <a href="#" className="text-gray-600 hover:text-purple-600 transition-colors">
-                      <Twitter className="w-5 h-5" />
+                    <a
+                      href="https://nikkport.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-600 hover:text-purple-600 transition-colors"
+                      aria-label="Portfolio"
+                    >
+                      <Globe className="w-5 h-5" />
                     </a>
                   </div>
                 </div>
@@ -1128,25 +1306,55 @@ export default function FamilyWebsite() {
             </div>
 
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-pink-400 transition-colors">
+              <a
+                href="https://github.com/nikgitofficial"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-pink-400 transition-colors"
+                aria-label="GitHub"
+              >
+                <Github className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61585289775055"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-pink-400 transition-colors"
+                aria-label="Facebook"
+              >
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="hover:text-pink-400 transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="hover:text-pink-400 transition-colors">
-                <Twitter className="w-5 h-5" />
+              <a
+                href="https://nikkport.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-pink-400 transition-colors"
+                aria-label="Portfolio"
+              >
+                <Globe className="w-5 h-5" />
               </a>
             </div>
           </div>
 
           <div className="border-t border-gray-700 mt-8 pt-8 text-center">
             <p className="text-gray-400">
-              © 2024 Paceño Family. Made with <Heart className="w-4 h-4 inline text-pink-500" fill="currentColor" /> for our loved ones.
+              © 2026 Paceño Family. Made with <Heart className="w-4 h-4 inline text-pink-500" fill="currentColor" /> by
+              Nikko
             </p>
           </div>
         </div>
       </footer>
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 bg-gradient-to-r from-pink-500 to-purple-600 p-4 rounded-full shadow-2xl hover:scale-110 transition-transform z-50"
+          aria-label="Back to top"
+        >
+          <ChevronUp className="w-6 h-6 text-white" />
+        </button>
+      )}
 
       <style jsx>{`
         @keyframes fade-in-scale {
@@ -1162,6 +1370,21 @@ export default function FamilyWebsite() {
 
         .animate-fade-in-scale {
           animation: fade-in-scale 0.3s ease-out;
+        }
+
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.6s ease-out;
         }
       `}</style>
     </div>
